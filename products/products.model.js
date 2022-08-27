@@ -1,13 +1,15 @@
 const products = [
     {
-        id: 'redshoe',
+        id: 1,
         description: 'Red Shoe',
         price: 42.12,
+        reviews: [],
     },
     {
-        id: 'bluiejean',
+        id: 2,
         description: 'Blue Jeans',
-        price: 55.55
+        price: 55.55,
+        reviews: [],
     }
 ];
 
@@ -25,8 +27,40 @@ function getProductsByPrice(min, max) {
     })
 }
 
+function addNewProduct(id, description, price) {
+    const newProduct = {
+        id,
+        price,
+        reviews: [],
+        description,
+    };
+
+    products.push(newProduct);
+
+    return newProduct;
+};
+
+function addNewProductReview(productId, rating, comment) {
+    const product = getProductById(productId);
+
+    if (product) {
+        const newReview = {
+            rating,
+            comment,
+        };
+
+        product.reviews.push(newReview);
+
+        return newReview;
+    }
+
+    throw new Error(`It was not possible to add the review. Product of id ${productId} was not found`);
+}
+
 module.exports = {
+    addNewProduct,
     getAllProducts,
     getProductById,
     getProductsByPrice,
+    addNewProductReview,
 };
